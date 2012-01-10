@@ -1,7 +1,15 @@
 /**
+ * The BoundedBufferedReader class
+ *
  * A BufferedReader that prevents DoS attacks by providing bounds for line length and number of lines
+ *
+ * Copyright (c) 2011 - Sean Malone
+ *
+ * The BoundedBufferedReader is published by Sean Malone under the BSD license. You should read and accept the
+ * LICENSE before you use, modify, and/or redistribute this software.
+ *
  * @author Sean Malone <sean@seantmalone.com>
- * @version 1.0
+ * @version 1.1
  */
 
 import java.io.*;
@@ -55,8 +63,14 @@ class BoundedBufferedReader extends BufferedReader
 		}
 		
 		if (currentCharVal<0)
+		{
 			//End of file
-			return null;
+			if (currentPos>0) 
+				//Return last line
+				return(new String(data,0,currentPos));
+			else
+				return null;
+		}
 		else
 		{	
 			//Remove newline characters from the buffer
